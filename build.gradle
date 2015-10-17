@@ -16,7 +16,6 @@ allprojects {
         compile 'org.scala-lang:scala-compiler:2.11.4'
         compile 'com.clearspring.analytics:stream:2.9.1-SNAPSHOT'
         compile 'org.elasticsearch:elasticsearch:2.0.0-rc1'
-        compile 'com.tdunning.t-digest:3.2-SNAPSHOT'
     }
 
     distributions {
@@ -39,6 +38,6 @@ project(':hyperloglog') {
 
 project(':tdigest') {
     dependencies {
-        
+        compile 'com.tdunning:t-digest:3.2-SNAPSHOT'
     }
 }
