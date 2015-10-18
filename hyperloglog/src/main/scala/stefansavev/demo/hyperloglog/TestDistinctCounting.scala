@@ -15,7 +15,7 @@ object TestDistinctCounting {
     val generator = new ItemGenerator(itemFrequencies, rnd)
 
     def createMultipleCounters(): MultipleCounters = {
-      new MultipleCounters(Array(new NaiveCounter(), new EfficientLinearCounter(Murmur3Hasher)))// new EfficientLinearCounter(Murmur3Hasher)))
+      new MultipleCounters(Array(new NaiveCounter(), new HyperLogLog(Murmur3Hasher)))// new EfficientLinearCounter(Murmur3Hasher)))
     }
     val writer = new PrintWriter("D:/tmp/approx-count.txt")
     val counters = createMultipleCounters()

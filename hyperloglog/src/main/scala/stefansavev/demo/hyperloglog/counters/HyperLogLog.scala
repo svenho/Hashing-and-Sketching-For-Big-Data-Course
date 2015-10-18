@@ -18,40 +18,18 @@ class HyperLogLog(hasher: Hasher) extends ApproximateCounter{
     counters(bucketIndex) = Math.max(counters(bucketIndex), sigma)
   }
 
-  def distinctCount_(): Double = {
+  def distinctCount(): Double = {
+    //this approximation is only good when the number of distinct elements is large
     var inverseSum = 0.0
-    val offset = 0 //1
 
     for(maxZeroSuffix <- counters){
-      val estimatedValuesInBucket = offset + (1 << maxZeroSuffix).toDouble
+      val estimatedValuesInBucket = (1 << maxZeroSuffix).toDouble
       inverseSum += 1.0/estimatedValuesInBucket
     }
-    val harmonicMean = m.toDouble/inverseSum// - 2
+
+    val harmonicMean = m.toDouble/inverseSum
 
     val corr = 0.7213/(1 + 1.079/m)
     corr*m*harmonicMean //multiply by m because we have m buckets
-
-    //val avgHeight = counters.sum.toDouble/m
-    //m*Math.exp(avgHeight*Math.log(2.0))
-  }
-
-  override def distinctCount(): Double = {
-    var inverseSum = 0.0
-    val offset = 1
-    var numNonZeros = 0
-    for(maxZeroSuffix <- counters){
-      if (maxZeroSuffix >= 0) {
-        val estimatedValuesInBucket = offset + (1 << maxZeroSuffix).toDouble
-        inverseSum += 1.0 / estimatedValuesInBucket
-        numNonZeros += 1
-      }
-    }
-    val harmonicMean = numNonZeros.toDouble/inverseSum - 2
-
-    val corr = 0.7213/(1 + 1.079/numNonZeros)
-    corr*numNonZeros*harmonicMean //multiply by m because we have m buckets
-
-    //val avgHeight = counters.sum.toDouble/m
-    //m*Math.exp(avgHeight*Math.log(2.0))
   }
 }
