@@ -10,7 +10,7 @@ import scala.util.Random
 
 object TestDistinctCounting {
   def main (args: Array[String]): Unit = {
-    val itemFrequencies = Array.range(1, 5000).map(_=> 1)
+    val itemFrequencies = Array.range(1, 50000).map(_=> 1)
     val rnd = new Random(48481)
     val generator = new ItemGenerator(itemFrequencies, rnd)
 

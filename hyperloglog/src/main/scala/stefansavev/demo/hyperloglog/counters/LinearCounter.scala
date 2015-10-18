@@ -20,6 +20,7 @@ class LinearCounter(hasher: Hasher) extends ApproximateCounter{
     }
     else{
       //it's hard to say anything except that the unique elements are more than
+      //typically linear counting should not be used in this situation
       m.toDouble*Math.log(m.toDouble)
     }
   }
